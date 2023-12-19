@@ -1,10 +1,10 @@
-// pages/index.js
+import React from "react";
 
-const HomePage = () => {
-  return <div>Home Page</div>;
+const Locations = () => {
+  return <div>Locations</div>;
 };
 
-export default HomePage;
+export default Locations;
 
 import { ServerResponse } from "http";
 
