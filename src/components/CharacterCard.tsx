@@ -26,7 +26,7 @@ export default function CharacterCard({
         (char: CharacterSpec) => char.name === character.name
       ) ? (
         <Image
-          className="z-10 absolute right-5 top-5"
+          className="z-10 absolute right-5 top-5 h-auto"
           src="/heart-filled.svg"
           alt="heart"
           width={36}
@@ -37,7 +37,7 @@ export default function CharacterCard({
         />
       ) : (
         <Image
-          className="z-10 absolute right-5 top-5"
+          className="z-10 absolute right-5 top-5 h-auto"
           src="/heart-empty.svg"
           alt="heart"
           width={36}
@@ -60,13 +60,14 @@ export default function CharacterCard({
       )}
       <Link
         href={`/character-detail/${character.id}`}
-        className="bg-gray-400 w-76 p-2 flex flex-col justify-center gap-2 items-center relative"
+        className="w-76 p-2 flex flex-col justify-center gap-2 items-center relative"
       >
         <Image
           src={character.image}
           alt={character.name}
-          width="260"
-          height={0}
+          width={300}
+          height={300}
+          className="h-auto"
         />
         <div className="flex justify-between items-center bg-blue-200s px-6s w-full">
           <div className="bg-red-200s">
