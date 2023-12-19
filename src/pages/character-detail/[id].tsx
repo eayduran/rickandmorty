@@ -28,17 +28,18 @@ function CharacterDetail({
         <Image
           src="/logo.png"
           alt="Rick and Morty Banner"
-          width={200}
-          height={200}
+          width={250}
+          height={250}
+          className="w-[140px] xl:w-[250px]  h-auto"
           priority
         />
         <div className="w-12 mr-16"></div>
       </div>
       <div className="px-16 bg-green-200s w-full h-full">
         {selectedCharacter ? (
-          <ul className="flex justify-around items-start bg-blue-200s w-full h-full">
+          <ul className="flex flex-col lg:flex-row items-center justify-center lg:justify-around lg:items-start lg:w-full h-full">
             <DetailCard character={selectedCharacter} />
-            <div className="bg-red-200s w-1/3">
+            <div className="w-full mt-6 lg:mt-0 lg:w-1/3">
               <div className="font-extrabold text-xl mb-4">
                 Other Characters
               </div>

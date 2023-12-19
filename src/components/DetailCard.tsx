@@ -24,22 +24,22 @@ export default function DetailCard({
       {/* <div className="z-10 flex h-8 w-8 justify-end items-center bg-blue-200 absolute right-8 top-8"> */}
       {characterFav.some((char) => char.name === character.name) ? ( // Returns true
         <Image
-          className="z-10 absolute right-5 top-5 h-auto"
           src="/heart-filled.svg"
           alt="heart"
-          height="10"
-          width="36"
+          width={60}
+          height={60}
+          className="z-10 w-[36px] sm:w-[60px] absolute right-5 top-5 h-auto"
           onClick={() => {
             dispatch(deleteCharacter(character.id));
           }}
         />
       ) : (
         <Image
-          className="z-10 absolute right-5 top-5 h-auto"
           src="/heart-empty.svg"
           alt="heart"
-          height="10"
-          width="36"
+          width={60}
+          height={60}
+          className="z-10 w-[36px] sm:w-[60px] absolute right-5 top-5 h-auto"
           onClick={() => {
             dispatch(
               addCharacter({
@@ -62,8 +62,8 @@ export default function DetailCard({
         <Image
           src={character.image}
           alt={character.name}
-          height="10"
-          width={400}
+          width={600}
+          height={600}
         />
         <div className="flex flex-col justify-between items-center w-full">
           <div className="w-full text-2xl text-gray-400 sbg-red-200">

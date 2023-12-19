@@ -9,7 +9,8 @@ import { useRouter } from "next/router";
 
 import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
-import DetailCard from "@/components/DetailCard";
+
+// import DetailCard from "@/components/DetailCard";
 export interface CharacterSpec {
   id: number;
   name: string;
@@ -30,168 +31,85 @@ function CharactersList({
   totalPages: number;
 }) {
   const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const { id } = router.query;
 
   return (
-    // <div className="flex flex-col justify-between items-center bg-white h-screen pb-2">
-    //   <div className="flex flex-col items-center justify-start gap-y-2 w-full bg-green-100s">
-    //     <a href="/locations/1" className="my-8">
-    //       <Image
-    //         className="h-auto"
-    //         src="/logo.png"
-    //         alt="Rick and Morty Banner"
-    //         width={200}
-    //         height={200}
-    //         priority
-    //       />
-    //     </a>
-    //     <div className="px-16 w-full">
-    //       <ul className="w-full flex justify-between mb-4">
-    //         <li className="font-bold text-3xl">Characters</li>
-    //         <ul className="flex">
-    //           <span className="flex items-center justify-center mr-2">
-    //             Filter by status
-    //           </span>
-    //           <a
-    //             href={`?status=dead`}
-    //             className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl"
-    //           >
-    //             <Image
-    //               src="/status-dead.svg"
-    //               alt="dead"
-    //               width={18}
-    //               height={18}
-    //             />
-    //             <span>Dead</span>
-    //           </a>
-    //           <a
-    //             href={`?status=alive`}
-    //             className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl"
-    //           >
-    //             <Image
-    //               src="/status-alive.svg"
-    //               alt="alive"
-    //               width={18}
-    //               height={18}
-    //             />
-    //             <span>Alive</span>
-    //           </a>
-    //           <a
-    //             href={`?status=unknown`}
-    //             className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl"
-    //           >
-    //             <Image
-    //               src="/status-unknown.svg"
-    //               alt="unknown"
-    //               width={18}
-    //               height={18}
-    //             />
-    //             <span>Unknown</span>
-    //           </a>
-    //           <a
-    //             href={`?`}
-    //             className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl"
-    //           >
-    //             <span>Reset</span>
-    //           </a>
-    //         </ul>
-    //         <Link href="/favorites">My Favorites</Link>
-    //       </ul>
-    //       {data.length > 0 ? (
-    //         data[currentPage - 1].items.map(
-    //           (character: CharacterSpec, index: number) => (
-    //             <DetailCard key={character.id} character={character} />
-    //           )
-    //         )
-    //       ) : (
-    //         <div className="text-center mt-12">
-    //           <h1>No Character Found</h1>
-    //         </div>
-    //       )}
-    //     </div>
-    //   </div>
-
-    //   <div className="my-4 pb-4">
-    //     {totalPages > 0 ? (
-    //       <Pagination
-    //         totalPages={totalPages}
-    //         currentPage={currentPage}
-    //         onPageChange={setCurrentPage}
-    //       />
-    //     ) : null}
-    //   </div>
-    // </div>
-
     <div className="flex flex-col justify-between items-center bg-white h-screen pb-2">
       <div className="flex flex-col items-center justify-start gap-y-2 w-full bg-green-100x">
-        <a href="/locations/1" className="my-8">
+        <Link href="/locations/1" className="my-8">
           <Image
             src="/logo.png"
             alt="Rick and Morty Banner"
-            width={200}
-            height={200}
+            width={250}
+            height={250}
+            className="w-[140px] xl:w-[250px]  h-auto"
           />
-        </a>
+        </Link>
         <div className="px-16 w-full justify-center items-center flex flex-col">
           <ul className="w-full flex justify-between mb-4">
-            <li className="font-bold text-3xl">Characters</li>
-            <ul className="flex">
-              <span className="flex items-center justify-center mr-2">
-                Filter by status
-              </span>
-              <a
-                href={`?status=dead`}
-                className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl"
-              >
-                <Image
-                  src="/status-dead.svg"
-                  alt="list"
-                  width={18}
-                  height={18}
-                />
-                <span>Dead</span>
-              </a>
-              <a
-                href={`?status=alive`}
-                className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl"
-              >
-                <Image
-                  src="/status-alive.svg"
-                  alt="list"
-                  width={18}
-                  height={18}
-                />
-                <span>Alive</span>
-              </a>
-              <a
-                href={`?status=unknown`}
-                className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl"
-              >
-                <Image
-                  src="/status-unknown.svg"
-                  alt="list"
-                  width={18}
-                  height={18}
-                />
-                <span>Unknown</span>
-              </a>
-              <a
-                href={`?`}
-                className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl"
-              >
-                <span>Reset</span>
-              </a>
-            </ul>
+            <li className="font-bold text-xl">Filter by status</li>
             <Link href="/favorites">My Favorites</Link>
           </ul>
+          <div className="overflow-x-auto items-center justify-center flex w-full mb-4">
+            <ul className="flex gap-x-4">
+              <Link
+                href={`/characters/${id}/?status=dead`}
+                className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl"
+              >
+                <div className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl">
+                  <Image
+                    src="/status-dead.svg"
+                    alt="list"
+                    width={18}
+                    height={18}
+                  />
+                  <div>Dead</div>
+                </div>
+              </Link>
+              <Link
+                href={`/characters/${id}/?status=alive`}
+                className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl"
+              >
+                <div className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl">
+                  <Image
+                    src="/status-alive.svg"
+                    alt="list"
+                    width={18}
+                    height={18}
+                  />
+                  <div>Alive</div>
+                </div>
+              </Link>
+              <Link
+                href={`/characters/${id}/?status=unknown`}
+                className="flex border-2 items-center justify-center gap-2 rounded-xl"
+              >
+                <div className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl">
+                  <Image
+                    src="/status-unknown.svg"
+                    alt="list"
+                    width={18}
+                    height={18}
+                  />
+                  <div>Unknown</div>
+                </div>
+              </Link>
+              <Link
+                href={`/characters/${id}/`}
+                className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl"
+              >
+                <div className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl">
+                  Reset
+                </div>
+              </Link>
+            </ul>
+          </div>
           {data[currentPage - 1]?.items.length > 0 ? (
             <ul className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-2 gap-x-12 max-w-screen-2xl">
-              {data[currentPage - 1].items.map(
-                (
-                  character: CharacterSpec // Remove the type annotation for character
-                ) => (
-                  <CharacterCard key={character.id} character={character} />
-                )
-              )}
+              {data[currentPage - 1].items.map((character: CharacterSpec) => (
+                <CharacterCard key={character.id} character={character} />
+              ))}
             </ul>
           ) : (
             <div className="text-center mt-12">

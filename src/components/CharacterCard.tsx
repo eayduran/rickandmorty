@@ -72,7 +72,9 @@ export default function CharacterCard({
         />
         <div className="flex justify-between items-center bg-blue-200s px-6s w-full">
           <div className="bg-red-200s">
-            <span className="font-bold text-xl">{character.name}</span>
+            <div className="font-bold text-xl w-32 lg:w-40 truncate">
+              {character.name}
+            </div>
             <div className="flex items-center text-sm font-medium bg-green-200s">
               <Image
                 className="mr-1"

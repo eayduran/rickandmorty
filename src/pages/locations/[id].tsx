@@ -27,13 +27,13 @@ function Location({ data }: { data: any }) {
           <Image
             src="/logo.png"
             alt="Rick and Morty Banner"
-            width={200}
-            height={200}
+            width={250}
+            height={250}
+            className="w-[140px] xl:w-[250px]  h-auto"
             priority
           />
         </div>
         <div className="mx-16">
-          <div className="w-full font-bold text-3xl mb-4">Locations</div>
           {data.results ? (
             <ul className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-y-2 gap-x-4">
               {data.results.map((location: LocationSpec) => (

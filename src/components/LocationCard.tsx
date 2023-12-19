@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export interface Location {
   id: number;
@@ -11,7 +12,7 @@ export interface Location {
 export default function LocationCard({ location }: { location: Location }) {
   const locationName = location.name.replace(/\s/g, "-").toLowerCase();
   return (
-    <a
+    <Link
       href={`/characters/${locationName}`}
       className="p-4 flex items-start justify-between border-2 border-gray-800 rounded-lg hover:bg-gray-300 text-black transition"
     >
@@ -31,8 +32,6 @@ export default function LocationCard({ location }: { location: Location }) {
         </span>
       </div>
       <div className="flex h-full items-center justify-center">
-        {/* <img src="/arrow-right.svg" alt="arrow-right" width={20} />
-         */}
         <Image
           src="/arrow-right.svg"
           alt="arrow-right"
@@ -40,6 +39,6 @@ export default function LocationCard({ location }: { location: Location }) {
           height={20}
         />
       </div>
-    </a>
+    </Link>
   );
 }
