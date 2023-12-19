@@ -1,7 +1,7 @@
 // characterSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { CharacterSpec } from "../pages/Characters";
+import { CharacterSpec } from "../pages/characters/[id]";
 
 export interface Character {
   id: number;

@@ -1,3 +1,4 @@
+import { GetServerSidePropsContext } from "next";
 import LocationCard from "../../components/LocationCard";
 import Image from "next/image";
 import Pagination from "@/components/Pagination";
@@ -56,8 +57,6 @@ function Location({ data }: { data: any }) {
 }
 
 export default Location;
-
-import { GetServerSidePropsContext } from "next";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { req } = context;
