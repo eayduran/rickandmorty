@@ -3,7 +3,7 @@ import LocationCard from "../../components/LocationCard";
 import Image from "next/image";
 import Pagination from "@/components/Pagination";
 import { useRouter } from "next/router";
-import { LOCATION_API_URL } from "@/utils";
+import { LOCATION_API_URL } from "@/api/apiEndpoints";
 import { LocationSpec } from "@/types";
 import Skeleton from "react-loading-skeleton";
 import Head from "next/head";

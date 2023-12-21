@@ -7,7 +7,7 @@ import Filter from "@/components/Filter";
 import Header from "@/components/Header";
 import { GetServerSidePropsContext } from "next";
 import { CharacterList, CharacterSpec } from "@/types";
-import { CHARACTER_API_URL, allCharacterIds } from "@/utils";
+import { CHARACTER_API_URL, allCharacterIds } from "@/api/apiEndpoints";
 import Head from "next/head";
 
 function CharactersListPage({ data, totalPages }: CharacterList) {

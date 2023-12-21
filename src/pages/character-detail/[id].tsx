@@ -1,5 +1,5 @@
 import DetailCard from "../../components/DetailCard";
-import { CHARACTER_API_URL, allCharacterIds } from "../../utils";
+import { CHARACTER_API_URL, allCharacterIds } from "../../api/apiEndpoints";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
