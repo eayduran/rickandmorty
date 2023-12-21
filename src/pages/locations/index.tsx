@@ -1,12 +1,10 @@
-import React from "react";
+import { ServerResponse } from "http";
 
 const Locations = () => {
-  return <div>Locations</div>;
+  return null;
 };
 
 export default Locations;
-
-import { ServerResponse } from "http";
 
 export async function getServerSideProps({ res }: { res: ServerResponse }) {
   // Redirect to /locations/1

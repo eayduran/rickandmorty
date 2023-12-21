@@ -1,10 +1,10 @@
 import { ServerResponse } from "http";
 
-const HomePage = () => {
+const Characters = () => {
   return null;
 };
 
-export default HomePage;
+export default Characters;
 
 export async function getServerSideProps({ res }: { res: ServerResponse }) {
   // Redirect to /locations/1

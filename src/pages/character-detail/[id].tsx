@@ -1,109 +1,41 @@
 import DetailCard from "../../components/DetailCard";
-import { CharacterSpec } from "../characters/[id]";
-import { allCharacterIds } from "../../utils";
+import { CHARACTER_API_URL, allCharacterIds } from "../../utils";
 import { GetServerSidePropsContext } from "next";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Header from "@/components/Header";
+import OtherCharacter from "@/components/OtherCharacter";
+import { CharacterDetail, CharacterSpec, LocationSpec } from "@/types";
 
 function CharacterDetail({
   selectedCharacter,
   otherCharacters,
-}: {
-  selectedCharacter: CharacterSpec;
-  otherCharacters: CharacterSpec[];
-}) {
+}: CharacterDetail) {
   const router = useRouter();
+  const goBack = () => {
+    router.back();
+  };
 
   return (
     <div className="flex flex-col justify-center items-center bg-white gap-y-2">
-      <div className="my-4 mt-8 flex justify-between w-full">
-        <button
-          className="w-12 ml-16"
-          onClick={() => {
-            router.back();
-          }}
-        >
-          <Image src="/back.svg" alt="back" width={48} height={50} />
-        </button>
-        <Image
-          src="/logo.png"
-          alt="Rick and Morty Banner"
-          width={250}
-          height={250}
-          className="w-[140px] xl:w-[250px]  h-auto"
-          priority
-        />
-        <div className="w-12 mr-16"></div>
-      </div>
-      <div className="px-16 bg-green-200s w-full h-full">
-        {selectedCharacter ? (
-          <ul className="flex flex-col lg:flex-row items-center justify-center lg:justify-around lg:items-start lg:w-full h-full">
-            <DetailCard character={selectedCharacter} />
-            <div className="w-full mt-6 lg:mt-0 lg:w-1/3">
-              <div className="font-extrabold text-xl mb-4">
-                Other Characters
-              </div>
-              <div className="mb-4">
-                {otherCharacters && (
-                  <div className="flex">
-                    <div>
-                      <Image
-                        src={otherCharacters[0].image}
-                        alt="other-character-1"
-                        width={100}
-                        height={50}
-                      />
-                    </div>
-                    <div className="bg-red-200s flex flex-col justify-start items-start pl-2">
-                      <div className="text-2xl text-gray-500 font-sans">
-                        {otherCharacters[0].name}
-                      </div>
-                      <div className="text-2xl italic">
-                        {otherCharacters[0].location.name}
-                      </div>
-                      <div className="text-xl italic">
-                        {otherCharacters[0].species} /{" "}
-                        {otherCharacters[0].gender}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div>
-                {otherCharacters && (
-                  <div className="flex">
-                    <div>
-                      <Image
-                        src={otherCharacters[1].image}
-                        alt="other-character-2"
-                        width={100}
-                        height={50}
-                      />
-                    </div>
-                    <div className="bg-red-200s flex flex-col justify-start items-start pl-2">
-                      <div className="text-2xl text-gray-500 font-sans">
-                        {otherCharacters[1].name}
-                      </div>
-                      <div className="text-2xl italic">
-                        {otherCharacters[1].location.name}
-                      </div>
-                      <div className="text-xl italic">
-                        {otherCharacters[1].species} /{" "}
-                        {otherCharacters[1].gender}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </ul>
-        ) : (
-          <div className="flex justify-center items-center h-screen">
-            <div className="text-2xl font-bold">Loading...</div>
+      <Header goBack={goBack} />
+      {selectedCharacter ? (
+        <div className="px-[4vw] flex flex-col  h-full items-start justify-start md:justify-center md:items-start md:mt-4 md:flex-row md:w-full md:gap-x-12">
+          <DetailCard character={selectedCharacter} />
+          <div className="flex-col justify-start items-start flex mt-6 gap-y-4 md:mt-0 md:w-1/3 md:h-full">
+            <div className="font-extrabold text-2xl">Other Characters</div>
+            {otherCharacters && (
+              <OtherCharacter character={otherCharacters[0]} />
+            )}
+            {otherCharacters && (
+              <OtherCharacter character={otherCharacters[1]} />
+            )}
           </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-screen">
+          <div className="text-2xl font-bold">Loading...</div>
+        </div>
+      )}
     </div>
   );
 }
@@ -116,10 +48,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   // Fetch data
   try {
-    const response = await fetch(
-      `https://rickandmortyapi.com/api/character/${allCharacterIds}`
-    );
+    const response = await fetch(CHARACTER_API_URL + allCharacterIds);
     const data = await response.json();
+
     const selectedCharacter = data.filter((character: CharacterSpec) => {
       return character.id.toString() === charId;
     })[0];
@@ -130,6 +61,23 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         character.location.name === selectedCharacter.location.name
       );
     });
+
+    try {
+      const locationResponse = await fetch(selectedCharacter.location.url);
+      const locationData = await locationResponse.json();
+      const selectedDimension = locationData.dimension;
+      selectedCharacter.dimension = selectedDimension;
+      otherCharacters[0].dimension = selectedDimension;
+      otherCharacters[1].dimension = selectedDimension;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return {
+        props: {
+          selectedCharacter: undefined,
+          otherCharacters: [],
+        },
+      };
+    }
 
     return {
       props: {

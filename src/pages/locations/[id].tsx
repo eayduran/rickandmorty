@@ -3,14 +3,8 @@ import LocationCard from "../../components/LocationCard";
 import Image from "next/image";
 import Pagination from "@/components/Pagination";
 import { useRouter } from "next/router";
-
-export interface LocationSpec {
-  id: number;
-  name: string;
-  type: string;
-  dimension: string;
-  residents: string[];
-}
+import { LOCATION_API_URL } from "@/utils";
+import { LocationSpec } from "@/types";
 
 function Location({ data }: { data: any }) {
   const router = useRouter();
@@ -65,7 +59,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Fetch data
   try {
     const response = await fetch(
-      `https://rickandmortyapi.com/api/location/?page=${url?.split("?id=")[1]}`
+      LOCATION_API_URL + `?page=${url?.split("?id=")[1]}`
     );
     const data = await response.json();
 

@@ -1,112 +1,45 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CharacterCard from "../../components/CharacterCard";
-import { allCharacterIds } from "../../utils";
+import { CHARACTER_API_URL, allCharacterIds } from "../../utils";
 
-import LocationCard from "../../components/LocationCard";
-import Image from "next/image";
 import Pagination from "@/components/Pagination";
 import { useRouter } from "next/router";
 
 import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
+import Filter from "@/components/Filter";
+import Header from "@/components/Header";
+import { CharacterList, CharacterSpec } from "@/types";
 
-// import DetailCard from "@/components/DetailCard";
-export interface CharacterSpec {
-  id: number;
-  name: string;
-  status: string;
-  species: string;
-  image: string;
-  liked?: boolean;
-  gender?: string;
-  location: {
-    name: string;
-  };
-}
-function CharactersList({
-  data,
-  totalPages,
-}: {
-  data: { page: number; items: CharacterSpec[] }[];
-  totalPages: number;
-}) {
+function CharactersList({ data, totalPages }: CharacterList) {
   const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
   const { id } = router.query;
+  const goBack = () => {
+    router.push("/locations/1");
+  };
 
   return (
     <div className="flex flex-col justify-between items-center bg-white h-screen pb-2">
-      <div className="flex flex-col items-center justify-start gap-y-2 w-full bg-green-100x">
-        <Link href="/locations/1" className="my-8">
-          <Image
-            src="/logo.png"
-            alt="Rick and Morty Banner"
-            width={250}
-            height={250}
-            className="w-[140px] xl:w-[250px]  h-auto"
-          />
-        </Link>
-        <div className="px-16 w-full justify-center items-center flex flex-col">
-          <ul className="w-full flex justify-between mb-4">
-            <li className="font-bold text-xl">Filter by status</li>
-            <Link href="/favorites">My Favorites</Link>
+      <div className="flex h-full sm:h-auto flex-col items-center justify-start gap-y-2 w-full">
+        <Header goBack={goBack} />
+        <div className="px-[4vw] sm:px-16 w-full h-full justify-start items-center flex flex-col">
+          <ul className="w-full md:max-w-screen-2xl flex justify-between mb-2">
+            <li className="font-medium text-xl">Filter by status</li>
+            <Link href="/favorites" className="font-medium text-xl underline">
+              My Favorites
+            </Link>
           </ul>
-          <div className="overflow-x-auto items-center justify-center flex w-full mb-4">
-            <ul className="flex gap-x-4">
-              <Link
-                href={`/characters/${id}/?status=dead`}
-                className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl"
-              >
-                <div className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl">
-                  <Image
-                    src="/status-dead.svg"
-                    alt="list"
-                    width={18}
-                    height={18}
-                  />
-                  <div>Dead</div>
-                </div>
-              </Link>
-              <Link
-                href={`/characters/${id}/?status=alive`}
-                className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl"
-              >
-                <div className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl">
-                  <Image
-                    src="/status-alive.svg"
-                    alt="list"
-                    width={18}
-                    height={18}
-                  />
-                  <div>Alive</div>
-                </div>
-              </Link>
-              <Link
-                href={`/characters/${id}/?status=unknown`}
-                className="flex border-2 items-center justify-center gap-2 rounded-xl"
-              >
-                <div className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl">
-                  <Image
-                    src="/status-unknown.svg"
-                    alt="list"
-                    width={18}
-                    height={18}
-                  />
-                  <div>Unknown</div>
-                </div>
-              </Link>
-              <Link
-                href={`/characters/${id}/`}
-                className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl"
-              >
-                <div className="flex w-28 border-2 items-center justify-center gap-2 rounded-xl">
-                  Reset
-                </div>
-              </Link>
-            </ul>
+          <div className="overflow-x-auto sm:h-auto overflow-y-hidden items-center justify-start sm:justify-center flex w-full mb-4">
+            <div className="flex gap-x-4">
+              <Filter id={id as string} status="Alive" />
+              <Filter id={id as string} status="Dead" />
+              <Filter id={id as string} status="Unknown" />
+              <Filter id={id as string} status="Reset" />
+            </div>
           </div>
           {data[currentPage - 1]?.items.length > 0 ? (
-            <ul className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-2 gap-x-12 max-w-screen-2xl">
+            <ul className="grid grid-flow-col overflow-x-auto w-full sm:w-auto sm:overflow-x-hidden sm:grid-flow-row sm:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-12 max-w-screen-2xl">
               {data[currentPage - 1].items.map((character: CharacterSpec) => (
                 <CharacterCard key={character.id} character={character} />
               ))}
@@ -119,7 +52,7 @@ function CharactersList({
         </div>
       </div>
 
-      <div className="my-4 pb-4">
+      <div className="mt-2 sm:my-4 sm:pb-4">
         {totalPages > 0 ? (
           <Pagination
             totalPages={totalPages}
@@ -141,9 +74,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   // Fetch data
   try {
-    const response = await fetch(
-      `https://rickandmortyapi.com/api/character/${allCharacterIds}`
-    );
+    const response = await fetch(CHARACTER_API_URL + allCharacterIds);
     const data = await response.json();
     const filteredData = data.filter((character: CharacterSpec) => {
       const formattedLocationName = character.location.name
