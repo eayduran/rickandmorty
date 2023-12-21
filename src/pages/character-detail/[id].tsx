@@ -31,6 +31,9 @@ function CharacterDetail({
       <div className="px-[4vw] flex flex-col h-full items-start justify-start md:justify-center md:items-start md:mt-4 md:flex-row md:w-full md:gap-x-12">
         <Head>
           <title>Character Detail</title>
+          <meta name="description" content="Rick and Morty" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="icon" href="/logo.png" />
         </Head>
         <DetailCard character={selectedCharacter} />
         <div className="flex-col justify-start items-start flex mt-6 gap-y-4 md:mt-0 md:w-1/3 md:h-full">

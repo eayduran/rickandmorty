@@ -34,7 +34,10 @@ function Favorites() {
   return (
     <div className="flex flex-col justify-center items-center bg-white gap-y-2">
       <Head>
-        <title>Character Detail</title>
+        <title>Favorite Characters</title>
+        <meta name="description" content="Rick and Morty" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/logo.png" />
       </Head>
       <Header goBack={goBack} />
       {renderCharacterCards()}

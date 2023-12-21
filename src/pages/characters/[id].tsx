@@ -40,7 +40,10 @@ function CharactersListPage({ data, totalPages }: CharacterList) {
   return (
     <div className="flex flex-col justify-between items-center bg-white h-screen pb-2">
       <Head>
-        <title>Characters</title>
+        <title>Rick and Morty Characters</title>
+        <meta name="description" content="Rick and Morty" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/logo.png" />
       </Head>
       <div className="flex h-full sm:h-auto flex-col items-center justify-start gap-y-2 w-full">
         <Header goBack={goBack} />

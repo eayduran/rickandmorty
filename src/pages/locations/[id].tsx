@@ -33,7 +33,10 @@ function LocationPage({ data }: { data: any }) {
   return (
     <div className="flex flex-col justify-between items-center bg-white h-screen">
       <Head>
-        <title>Locations</title>
+        <title>Rick and Morty Locations</title>
+        <meta name="description" content="Rick and Morty" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/logo.png" />
       </Head>
       <div className="flex flex-col items-center justify-center gap-y-2 my-4 mt-8">
         <div>
