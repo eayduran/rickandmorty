@@ -5,6 +5,8 @@ import Pagination from "@/components/Pagination";
 import { useRouter } from "next/router";
 import { LOCATION_API_URL } from "@/utils";
 import { LocationSpec } from "@/types";
+import Skeleton from "react-loading-skeleton";
+import Head from "next/head";
 
 function LocationPage({ data }: { data: any }) {
   const router = useRouter();
@@ -24,12 +26,15 @@ function LocationPage({ data }: { data: any }) {
         </ul>
       );
     } else {
-      return <div>Loading...</div>;
+      return <Skeleton count={20} height={200} className="w-full" />;
     }
   };
 
   return (
     <div className="flex flex-col justify-between items-center bg-white h-screen">
+      <Head>
+        <title>Locations</title>
+      </Head>
       <div className="flex flex-col items-center justify-center gap-y-2 my-4 mt-8">
         <div>
           <Image
@@ -38,7 +43,7 @@ function LocationPage({ data }: { data: any }) {
             width={250}
             height={250}
             className="w-[140px] xl:w-[250px]  h-auto"
-            priority
+            priority={true}
           />
         </div>
         <div className="mx-16 mt-4">{renderLocationCards()}</div>

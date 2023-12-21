@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import DetailCard from "@/components/DetailCard";
 import Header from "@/components/Header";
 import { CharacterSpec } from "@/types";
+import Head from "next/head";
 
 function Favorites() {
   const router = useRouter();
@@ -32,6 +33,9 @@ function Favorites() {
 
   return (
     <div className="flex flex-col justify-center items-center bg-white gap-y-2">
+      <Head>
+        <title>Character Detail</title>
+      </Head>
       <Header goBack={goBack} />
       {renderCharacterCards()}
     </div>

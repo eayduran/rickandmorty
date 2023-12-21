@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import OtherCharacter from "@/components/OtherCharacter";
 import { CharacterDetail, CharacterSpec } from "@/types";
+import Skeleton from "react-loading-skeleton";
+import Head from "next/head";
 
 function CharacterDetail({
   selectedCharacter,
@@ -20,13 +22,16 @@ function CharacterDetail({
     if (!selectedCharacter) {
       return (
         <div className="flex justify-center items-center h-screen">
-          <div className="text-2xl font-bold">Loading...</div>
+          <Skeleton count={1} height={200} className="w-full" />
         </div>
       );
     }
 
     return (
       <div className="px-[4vw] flex flex-col h-full items-start justify-start md:justify-center md:items-start md:mt-4 md:flex-row md:w-full md:gap-x-12">
+        <Head>
+          <title>Character Detail</title>
+        </Head>
         <DetailCard character={selectedCharacter} />
         <div className="flex-col justify-start items-start flex mt-6 gap-y-4 md:mt-0 md:w-1/3 md:h-full">
           <div className="font-extrabold text-2xl">Other Characters</div>

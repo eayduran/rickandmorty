@@ -8,6 +8,7 @@ import Header from "@/components/Header";
 import { GetServerSidePropsContext } from "next";
 import { CharacterList, CharacterSpec } from "@/types";
 import { CHARACTER_API_URL, allCharacterIds } from "@/utils";
+import Head from "next/head";
 
 function CharactersListPage({ data, totalPages }: CharacterList) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,6 +39,9 @@ function CharactersListPage({ data, totalPages }: CharacterList) {
 
   return (
     <div className="flex flex-col justify-between items-center bg-white h-screen pb-2">
+      <Head>
+        <title>Characters</title>
+      </Head>
       <div className="flex h-full sm:h-auto flex-col items-center justify-start gap-y-2 w-full">
         <Header goBack={goBack} />
         <div className="px-[4vw] sm:px-16 w-full h-full justify-start items-center flex flex-col">
