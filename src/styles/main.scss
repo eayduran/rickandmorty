@@ -1,0 +1,121 @@
+$character-color: rgb(126, 126, 126);
+.favorite-button {
+  width: 44px;
+  height: 44px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 10;
+  @media (min-width: 767px) {
+    width: 56px;
+    height: 56px;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.character-card-name {
+  color: $character-color;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  width: 8rem;
+
+  @media (min-width: 1024px) {
+    width: 12rem;
+    font-size: 1.75rem;
+    line-height: 2rem;
+  }
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.character-card-status {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
+
+.detail-name {
+  width: 100%;
+  font-size: 1.25rem;
+  color: $character-color;
+
+  @media (min-width: 767px) {
+    font-size: 1.75rem;
+  }
+}
+
+.detail-status {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.25rem;
+
+  @media (min-width: 767px) {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+  }
+}
+
+.detail-species {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  font-style: italic;
+}
+
+.detail-dimension {
+  display: flex;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  font-style: italic;
+
+  @media (min-width: 767px) {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+  }
+}
+
+.other-character-name {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: $character-color;
+}
+
+.other-character-dimension {
+  font-size: 1.25rem;
+  font-style: italic;
+  margin-bottom: 0.25rem;
+}
+.other-character-species {
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.location-name {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.location-text-variable {
+  // text-slate-500 mr-2
+  color: rgb(100 116 139 / var(--tw-text-opacity));
+  margin-right: 0.5rem;
+}
+
+.location-text {
+  // font-medium
+  font-weight: 500;
+}
