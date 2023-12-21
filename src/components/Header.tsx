@@ -13,7 +13,7 @@ const Header = ({ goBack }: { goBack: () => void }) => {
         width={250}
         height={250}
         className="w-[140px] xl:w-[250px]  h-auto"
-        priority
+        priority={true}
       />
       <div className="w-12 mr-[4vw] md:mr-16"></div>
     </div>
