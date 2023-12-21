@@ -20,7 +20,7 @@ const FavoriteButton = ({
 
   return (
     <Image
-      className="z-10 absolute right-5 top-5 h-auto sm:w-[64px]"
+      className="favorite-button"
       src={heartIcon}
       alt={isFavorite ? "heart-filled" : "heart"}
       width={48}
@@ -45,10 +45,8 @@ const CharacterInfo = ({ character }: { character: CharacterSpec }) => {
       />
       <div className="flex w-full justify-between items-center">
         <div>
-          <div className="text-[rgb(126,126,126)] text-xl w-32 lg:w-40 truncate">
-            {character.name}
-          </div>
-          <div className="flex items-center text-sm font-medium">
+          <div className="character-card-name">{character.name}</div>
+          <div className="character-card-status">
             <Image
               className="mr-1"
               src={`/status-${character.status.toLowerCase()}.svg`}

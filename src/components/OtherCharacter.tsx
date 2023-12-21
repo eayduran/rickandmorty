@@ -14,11 +14,9 @@ const OtherCharacter = ({ character }: { character: CharacterSpec }) => {
         />
       </div>
       <div className="flex flex-col">
-        <h2 className="text-lg font-medium text-[rgb(126,126,126)]">
-          {character.name}
-        </h2>
-        <p className="text-sm italic mb-1">{character.dimension}</p>
-        <p className="text-sm italic">
+        <h2 className="other-character-name">{character.name}</h2>
+        <p className="other-character-dimension">{character.dimension}</p>
+        <p className="other-character-species">
           {character.species} / {character.gender}
         </p>
       </div>

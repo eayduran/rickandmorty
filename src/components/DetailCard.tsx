@@ -24,7 +24,7 @@ const FavoriteButton = ({
       alt="heart"
       width={60}
       height={60}
-      className="z-10 w-[36px] sm:w-[60px] absolute right-5 top-5 h-auto"
+      className="favorite-button"
       onClick={onClick}
     />
   );
@@ -41,11 +41,9 @@ const CharacterDetails = ({ character }: { character: CharacterSpec }) => {
         height={600}
       />
       <div className="flex flex-col justify-between items-center w-full">
-        <div className="w-full text-2xl text-[rgb(126,126,126)]">
-          {character.name}
-        </div>
+        <div className="detail-name">{character.name}</div>
         <div className="items-center justify-between w-full flex">
-          <div className="flex items-center text-sm font-medium">
+          <div className="detail-status">
             <Image
               src={`/status-${character.status.toLowerCase()}.svg`}
               alt="arrow"
@@ -56,11 +54,11 @@ const CharacterDetails = ({ character }: { character: CharacterSpec }) => {
               {character.status} - {character.species}
             </div>
           </div>
-          <div className="flex items-center justify-end text-sm font-medium italic">
+          <div className="detail-species">
             {character.species} / {character.gender}
           </div>
         </div>
-        <div className="flex w-full italic">{character.dimension}</div>
+        <div className="detail-dimension">{character.dimension}</div>
       </div>
     </div>
   );

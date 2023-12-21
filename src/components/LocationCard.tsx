@@ -1,31 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Location } from "@/types";
 
-export interface Location {
-  id: number;
-  name: string;
-  type: string;
-  dimension: string;
-  residents: string[];
-}
-
-// Component for displaying location details using semantic elements
+// Component for displaying location details
 const LocationDetails = ({ location }: { location: Location }) => {
   return (
     <div className="flex flex-col">
-      <h2 className="font-extrabold text-xl mb-2">{location.name}</h2>
+      <h2 className="location-name">{location.name}</h2>
       <dl className="grid gap-2">
         <div className="flex items-center">
-          <dt className="text-slate-500 mr-2">Type:</dt>
-          <dd className="font-medium">{location.type}</dd>
+          <dt className="location-text-variable">Type:</dt>
+          <dd className="location-text">{location.type}</dd>
         </div>
         <div className="flex items-center">
-          <dt className="text-slate-500 mr-2">Dimension:</dt>
-          <dd className="font-medium">{location.dimension}</dd>
+          <dt className="location-text-variable">Dimension:</dt>
+          <dd className="location-text">{location.dimension}</dd>
         </div>
         <div className="flex items-center">
-          <dt className="text-slate-500 mr-2">Resident Count:</dt>
-          <dd className="font-medium">{location.residents.length}</dd>
+          <dt className="location-text-variable">Resident Count:</dt>
+          <dd className="location-text">{location.residents.length}</dd>
         </div>
       </dl>
     </div>
@@ -41,7 +34,7 @@ const ArrowIcon = () => {
   );
 };
 
-// Main LocationCard component using semantic elements
+// Main LocationCard component
 export default function LocationCard({ location }: { location: Location }) {
   const locationName = location.name.replace(/\s/g, "-").toLowerCase();
 
