@@ -12,7 +12,7 @@ const Filter = ({ id, status }: { id: string; status: string }) => {
     >
       {status !== "Reset" && (
         <Image
-          src={`/status-${status}.svg`}
+          src={`/status-${status.toLowerCase()}.svg`}
           className="mx-2"
           alt="list"
           width={18}
