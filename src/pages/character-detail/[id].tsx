@@ -4,38 +4,47 @@ import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import OtherCharacter from "@/components/OtherCharacter";
-import { CharacterDetail, CharacterSpec, LocationSpec } from "@/types";
+import { CharacterDetail, CharacterSpec } from "@/types";
 
 function CharacterDetail({
   selectedCharacter,
   otherCharacters,
 }: CharacterDetail) {
   const router = useRouter();
+
   const goBack = () => {
     router.back();
+  };
+
+  const renderOtherCharacters = () => {
+    if (!selectedCharacter) {
+      return (
+        <div className="flex justify-center items-center h-screen">
+          <div className="text-2xl font-bold">Loading...</div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="px-[4vw] flex flex-col h-full items-start justify-start md:justify-center md:items-start md:mt-4 md:flex-row md:w-full md:gap-x-12">
+        <DetailCard character={selectedCharacter} />
+        <div className="flex-col justify-start items-start flex mt-6 gap-y-4 md:mt-0 md:w-1/3 md:h-full">
+          <div className="font-extrabold text-2xl">Other Characters</div>
+          {otherCharacters?.length > 0 && (
+            <>
+              <OtherCharacter character={otherCharacters[0]} />
+              <OtherCharacter character={otherCharacters[1]} />
+            </>
+          )}
+        </div>
+      </div>
+    );
   };
 
   return (
     <div className="flex flex-col justify-center items-center bg-white gap-y-2">
       <Header goBack={goBack} />
-      {selectedCharacter ? (
-        <div className="px-[4vw] flex flex-col  h-full items-start justify-start md:justify-center md:items-start md:mt-4 md:flex-row md:w-full md:gap-x-12">
-          <DetailCard character={selectedCharacter} />
-          <div className="flex-col justify-start items-start flex mt-6 gap-y-4 md:mt-0 md:w-1/3 md:h-full">
-            <div className="font-extrabold text-2xl">Other Characters</div>
-            {otherCharacters && (
-              <OtherCharacter character={otherCharacters[0]} />
-            )}
-            {otherCharacters && (
-              <OtherCharacter character={otherCharacters[1]} />
-            )}
-          </div>
-        </div>
-      ) : (
-        <div className="flex justify-center items-center h-screen">
-          <div className="text-2xl font-bold">Loading...</div>
-        </div>
-      )}
+      {renderOtherCharacters()}
     </div>
   );
 }

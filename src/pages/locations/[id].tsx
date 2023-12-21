@@ -6,18 +6,32 @@ import { useRouter } from "next/router";
 import { LOCATION_API_URL } from "@/utils";
 import { LocationSpec } from "@/types";
 
-function Location({ data }: { data: any }) {
+function LocationPage({ data }: { data: any }) {
   const router = useRouter();
   const { id } = router.query;
 
-  function GoToPage(page: number) {
+  const goToPage = (page: number) => {
     router.push(`/locations/${page}`);
-  }
+  };
+
+  const renderLocationCards = () => {
+    if (data.results) {
+      return (
+        <ul className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-y-2 gap-x-4">
+          {data.results.map((location: LocationSpec) => (
+            <LocationCard key={location.id} location={location} />
+          ))}
+        </ul>
+      );
+    } else {
+      return <div>Loading...</div>;
+    }
+  };
 
   return (
     <div className="flex flex-col justify-between items-center bg-white h-screen">
-      <div className="flex flex-col items-center justify-center gap-y-2">
-        <div className="my-4 mt-8">
+      <div className="flex flex-col items-center justify-center gap-y-2 my-4 mt-8">
+        <div>
           <Image
             src="/logo.png"
             alt="Rick and Morty Banner"
@@ -27,36 +41,25 @@ function Location({ data }: { data: any }) {
             priority
           />
         </div>
-        <div className="mx-16">
-          {data.results ? (
-            <ul className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-y-2 gap-x-4">
-              {data.results.map((location: LocationSpec) => (
-                <LocationCard key={location.id} location={location} />
-              ))}
-            </ul>
-          ) : (
-            <div>Loading...</div>
-          )}
-        </div>
+        <div className="mx-16 mt-4">{renderLocationCards()}</div>
       </div>
       <div className="my-4 pb-4">
         <Pagination
           totalPages={data.info.pages}
           currentPage={parseInt(id as string)}
-          onPageChange={GoToPage}
+          onPageChange={goToPage}
         />
       </div>
     </div>
   );
 }
 
-export default Location;
+export default LocationPage;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { req } = context;
   const { url } = req;
 
-  // Fetch data
   try {
     const response = await fetch(
       LOCATION_API_URL + `?page=${url?.split("?id=")[1]}`
@@ -72,7 +75,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     console.error("Error fetching data:", error);
     return {
       props: {
-        data: [], // Return an empty array or handle the error case accordingly
+        data: [],
       },
     };
   }

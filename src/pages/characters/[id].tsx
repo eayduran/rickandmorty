@@ -1,22 +1,39 @@
 import { useState } from "react";
 import CharacterCard from "../../components/CharacterCard";
-import { CHARACTER_API_URL, allCharacterIds } from "../../utils";
-
-import Pagination from "@/components/Pagination";
 import { useRouter } from "next/router";
-
-import { GetServerSidePropsContext } from "next";
+import Pagination from "@/components/Pagination";
 import Link from "next/link";
 import Filter from "@/components/Filter";
 import Header from "@/components/Header";
+import { GetServerSidePropsContext } from "next";
 import { CharacterList, CharacterSpec } from "@/types";
+import { CHARACTER_API_URL, allCharacterIds } from "@/utils";
 
-function CharactersList({ data, totalPages }: CharacterList) {
+function CharactersListPage({ data, totalPages }: CharacterList) {
   const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
   const { id } = router.query;
+
   const goBack = () => {
     router.push("/locations/1");
+  };
+
+  const renderCharacterCards = () => {
+    if (data[currentPage - 1]?.items.length > 0) {
+      return (
+        <ul className="grid grid-flow-col overflow-x-auto w-full sm:w-auto sm:overflow-x-hidden sm:grid-flow-row sm:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-12 max-w-screen-2xl">
+          {data[currentPage - 1].items.map((character: CharacterSpec) => (
+            <CharacterCard key={character.id} character={character} />
+          ))}
+        </ul>
+      );
+    } else {
+      return (
+        <div className="text-center mt-12">
+          <h1>No Character Found</h1>
+        </div>
+      );
+    }
   };
 
   return (
@@ -32,40 +49,28 @@ function CharactersList({ data, totalPages }: CharacterList) {
           </ul>
           <div className="overflow-x-auto sm:h-auto overflow-y-hidden items-center justify-start sm:justify-center flex w-full mb-4">
             <div className="flex gap-x-4">
-              <Filter id={id as string} status="Alive" />
-              <Filter id={id as string} status="Dead" />
-              <Filter id={id as string} status="Unknown" />
-              <Filter id={id as string} status="Reset" />
+              {["Alive", "Dead", "Unknown", "Reset"].map((status, index) => (
+                <Filter key={index} id={id as string} status={status} />
+              ))}
             </div>
           </div>
-          {data[currentPage - 1]?.items.length > 0 ? (
-            <ul className="grid grid-flow-col overflow-x-auto w-full sm:w-auto sm:overflow-x-hidden sm:grid-flow-row sm:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-12 max-w-screen-2xl">
-              {data[currentPage - 1].items.map((character: CharacterSpec) => (
-                <CharacterCard key={character.id} character={character} />
-              ))}
-            </ul>
-          ) : (
-            <div className="text-center mt-12">
-              <h1>No Character Found</h1>
-            </div>
-          )}
+          {renderCharacterCards()}
         </div>
       </div>
-
       <div className="mt-2 sm:my-4 sm:pb-4">
-        {totalPages > 0 ? (
+        {totalPages > 0 && (
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}
             onPageChange={setCurrentPage}
           />
-        ) : null}
+        )}
       </div>
     </div>
   );
 }
 
-export default CharactersList;
+export default CharactersListPage;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { params, query, req } = context;
