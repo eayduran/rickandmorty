@@ -2,7 +2,7 @@ This is a Rick and Morty app with NextJS.
 
 Here is live url of this app:
 
-[https://rick-and-morty-example-nextjs.vercel.app/]((https://rick-and-morty-example-nextjs.vercel.app/))
+[https://rick-and-morty-example-nextjs.vercel.app/](https://rick-and-morty-example-nextjs.vercel.app/)
 
 First, run the development server:
 
